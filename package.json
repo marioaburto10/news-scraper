@@ -1,0 +1,28 @@
+{
+  "name": "news-scraper",
+  "version": "1.0.0",
+  "description": "This is a web app that is built with Node JS, Express, MongoDB, and Handlebars. It uses Mongoose to create Schemas and to connect to my Database and it uses Cheerio to scrape news articles.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marioaburto10/news-scraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marioaburto10/news-scraper/issues"
+  },
+  "homepage": "https://github.com/marioaburto10/news-scraper#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cheerio": "^0.20.0",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.11.12",
+    "request": "^2.69.0"
+  }
+}
