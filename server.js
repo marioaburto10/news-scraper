@@ -4,7 +4,7 @@ var expressHandlebars = require("express-handlebars");
 var bodyParser = require("body-parser");
 
 // Set up port to be either the host's designated port, or 3000
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 4000;
 
 // Instantiate Express App
 var app = express();
@@ -26,6 +26,9 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+// Require routes file to pass router object
+require("./config/routes")(router);
+
 // Have every request go through the router middleware
 app.use(router);
 
@@ -46,7 +49,7 @@ mongoose.connect(db, function(error) {
 
 // Listen on the port
 app.listen(PORT, function() {
-  console.log("The magic happers on port:" + PORT);
+  console.log("The magic happers on port:" + PORT + " !");
 });
 
 
