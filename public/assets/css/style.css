@@ -64,3 +64,8 @@ body {
   font-size: 100px;
   font-weight: 800;
 }
+
+.article-summary {
+  margin-left: 110px;
+  margin-right: 110px;
+}
