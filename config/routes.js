@@ -33,5 +33,24 @@ module.exports = function(router) {
     });
   });
 
+  // This route handles getting all headlines from the database
+  router.get("/api/headlines", function(req, res) {
+  	// If the client specifies a saved query parameter, ie "/api/headlines/?saved=true"
+    // which is translated to just { saved: true } on req.query,
+    // then set the query object equal to this
+	var query = {};
+    if (req.query.saved) {
+      query = req.query;
+    }
+
+    // Run the headlinesController get method and pass in whether we want saved, unsaved,
+    // (or all headlines by default)
+    headlinesController.get(query, function(data) {
+      // Send the article data back as JSON
+      res.json(data);
+    });
+
+  });
+
 
 };

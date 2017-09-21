@@ -27,12 +27,26 @@ module.exports = {
 			// https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/
 			// unordered inserts have the benefit of being faster, and errors are logged instead
 			// of thrown. This means that even if some of the inserts fail, the rest will continue
-			// An insert is expected to fail whenever we have a duplicate headline since that property
+			// An insert is expected to fail whenever there is a duplicate headline since that property
 			// is marked unique on the mongoose model
 			Headline.collection.insertMany(articles, { ordered: false }, function(err, docs) {
 				cb(err, docs);
 			});
 		});
-	}
+	},
+
+	get: function(query, cb) {
+    // Prepare a query to get the data that was scraped,
+    // and sort starting from most recent (sorted by id num)
+    Headline.find(query)
+		.sort({
+			_id: -1
+		})
+		// Execute this query
+		.exec(function(err, doc) {
+			// Once finished, pass the list into the callback function
+			cb(doc);
+		});
+  }
 
 };
