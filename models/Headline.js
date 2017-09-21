@@ -30,6 +30,7 @@ var headlineSchema = new Schema({
 		type: String,
 		required: true
 	},
+	// Articles will not be marked saved when they are created.
 	saved: {
 		type: Boolean,
 		default: false
