@@ -1,9 +1,10 @@
 /* gloabl bootbox */
 $(document).ready(function() {
 	// Setting a reference to the article-container div where all the dynamic content will go
+	var articleContainer = $(".article-container");
+
 	// Adding event listeners to any dynamically generated "save article" and
 	//"scrape new article" button
-	var articleContainer = $(".article-container");
 	$(document).on("click", ".btn.save", handleArticleSave);
 	$(document).on("click", ".scrape-new", handleArticleScrape);
 
@@ -53,7 +54,7 @@ $(document).ready(function() {
 	        "' >",
 	        article.headline,
 	        "</a>",
-	        "<a class='btn btn-success save pull-right'>",
+	        "<a class='btn btn-success save'>",
 	        "Save Article",
 	        "</a>",
 	        "</h3>",
