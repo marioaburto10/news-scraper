@@ -55,7 +55,8 @@ body {
   text-align: center;
 }
 
-.jumbotron .caption h1 {
+.jumbotron .caption h1,
+.jumbotron .caption p {
   color: white;
   font-family: "Cormorant SC";
 }
@@ -64,6 +65,11 @@ body {
   font-size: 100px;
   font-weight: 800;
 }
+
+.jumbotron p {
+  font-size: 25px;
+}
+
 
 .article-summary {
   margin-left: 110px;

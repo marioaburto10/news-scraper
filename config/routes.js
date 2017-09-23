@@ -57,5 +57,19 @@ module.exports = function(router) {
 
   });
 
+  // This route handles updating a headline, in particular saving one
+  router.patch("/api/headlines", function(req, res) {
+    // Construct a query object to send to the headlinesController with the
+    // id of the headline to be saved
+
+    // Using req.body here instead of req.params to make this route easier to
+    // change if we ever want to update a headline in any way except saving it
+
+    headlinesController.update(req.body, function(err, data) {
+      // After completion, send the result back to the user
+      res.json(data);
+    });
+  });
+
 
 };

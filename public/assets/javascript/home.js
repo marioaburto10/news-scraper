@@ -1,10 +1,10 @@
 /* gloabl bootbox */
 $(document).ready(function() {
 	// Setting a reference to the article-container div where all the dynamic content will go
-	// Adding event listeners to any dynamically generated
+	// Adding event listeners to any dynamically generated "save article" and
 	//"scrape new article" button
 	var articleContainer = $(".article-container");
-	// $(document).on("click", ".btn.save", handleArticleSave);
+	$(document).on("click", ".btn.save", handleArticleSave);
 	$(document).on("click", ".scrape-new", handleArticleScrape);
 
 	// Once the page is ready, run the initPage function to kick things off
@@ -95,6 +95,29 @@ $(document).ready(function() {
 	    // Appending this data to the page
 	    articleContainer.append(emptyAlert);
 	}
+
+	function handleArticleSave() {
+    // This function is triggered when the user wants to save an article
+    // When the article was rendered initially, a javascript object containing the headline id was attached
+    // to the element using the .data method. Here it is retrieved.
+	var articleToSave = $(this).parents(".panel").data();
+    articleToSave.saved = true;
+    // Using a patch method to be semantic since this is an update to an existing record in the collection
+    $.ajax({
+      method: "PATCH",
+      url: "/api/headlines",
+      data: articleToSave
+    })
+    .then(function(data) {
+      // If successful, mongoose will send back an object containing a key of "ok" with the value of 1
+      // (which casts to 'true')
+      if (data.ok) {
+        // Run the initPage function again. This will reload the entire list of articles
+        initPage();
+      }
+    });
+	}
+
 
 	function handleArticleScrape() {
 	    // This function handles the user clicking any "scrape new article" buttons
