@@ -10,7 +10,7 @@ var scrape = function(cb) {
 	 // Use the request package to take in the body of the page's html
 	request("https://www.coindesk.com/", function(err, res, body) {
 		// body is the actual HTML on the page. Load this into cheerio
-		console.log("scraping")
+		console.log("scraping");
 		  // Saving this to $ creates a virtual HTML page we can minipulate and
 		  // traverse with the same methods as jQuery
 		  var $ = cheerio.load(body);
@@ -29,24 +29,24 @@ var scrape = function(cb) {
 		    // grab the image link of each article
 		    var img = $(this).children(".picture").children("a").children("img").attr("src");
 		    // console.log("this is an article" , img);
-		  // So long as headline and sum aren't empty or undefined, do the following
-		  if (head && sum && lnk && img) {
+			  // So long as headline and sum aren't empty or undefined, do the following
+			  if (head && sum && lnk && img) {
 
-		    // This section uses regular expressions and the trim function to tidy the headlines and summaries
-		    // Removing extra lines, extra spacing, extra tabs, etc.. to increase to typographical cleanliness.
-		    var headNeat = head.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
-		    var sumNeat = sum.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+			    // This section uses regular expressions and the trim function to tidy the headlines and summaries
+			    // Removing extra lines, extra spacing, extra tabs, etc.. to increase to typographical cleanliness.
+			    var headNeat = head.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+			    var sumNeat = sum.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
 
-		    // Initialize an object we will push to the articles array
-		    var dataToAdd = {
-		      headline: headNeat,
-		      summary: sumNeat,
-		      link: lnk,
-		      image: img
-		    };
+			    // Initialize an object we will push to the articles array
+			    var dataToAdd = {
+			      headline: headNeat,
+			      summary: sumNeat,
+			      link: lnk,
+			      image: img
+			    };
 
-		    articles.push(dataToAdd);
-		  }
+			    articles.push(dataToAdd);
+			  }
 		});
 		// After loop is complete, send back the array of articles to the callback function
     	cb(articles);

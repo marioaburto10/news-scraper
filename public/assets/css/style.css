@@ -69,3 +69,31 @@ body {
   margin-left: 110px;
   margin-right: 110px;
 }
+
+.panel {
+  border-radius: 0;
+  box-shadow: 3px 3px 20px lightslategrey;
+}
+
+.panel.panel-default .panel-heading {
+  background-color: #D3D3D3;
+}
+
+.scrape-new {
+  cursor: pointer;
+}
+
+.navbar-nav > li > a.scrape-new {
+  padding: 10px;
+  margin: 5px;
+  font-weight: 800;
+  color: white;
+}
+
+.navbar-nav > li > a.scrape-new:hover {
+  background: #4caf50;
+}
+
+.navbar-nav > li > a.scrape-new:active {
+  background: #e51c23;
+}

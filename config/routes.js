@@ -12,6 +12,11 @@ module.exports = function(router) {
     res.render("home");
   });
 
+  // This route renders the saved handledbars page
+  router.get("/saved", function(req, res) {
+    res.render("saved");
+  });
+
   // This route handles scraping articles to add to the db
   router.get("/api/fetch", function(req, res) {
   	// This method inside the headlinesController will try and scrap new articles
