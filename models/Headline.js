@@ -7,7 +7,7 @@ var mongoose = require("mongoose");
 // Create a schema class using mongoose's schema method
 var Schema = mongoose.Schema;
 
-// Create the headlineSchema with our schema class
+// Create the headlineSchema with schema class
 var headlineSchema = new Schema({
 	// headline, a string, must be entered
 	headline: {

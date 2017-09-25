@@ -63,7 +63,7 @@ module.exports = function(router) {
     // id of the headline to be saved
 
     // Using req.body here instead of req.params to make this route easier to
-    // change if we ever want to update a headline in any way except saving it
+    // change if a headline has to be changed in any way except saving it
 
     headlinesController.update(req.body, function(err, data) {
       // After completion, send the result back to the user
@@ -77,8 +77,8 @@ module.exports = function(router) {
     // Set the _id property of the query object to the id in req.params
     query._id = req.params.id;
 
-    // Run the headlinesController delete method and pass in our query object containing
-    // the id of the headline we want to delete
+    // Run the headlinesController delete method and pass in query object containing
+    // the id of the headline to be deleted
     headlinesController.delete(query, function(err, data) {
       // Send the result back as JSON to be handled client side
       res.json(data);
