@@ -71,5 +71,19 @@ module.exports = function(router) {
     });
   });
 
+  // This route handles deleting a specified headline
+  router.delete("/api/headlines/:id", function(req, res) {
+    var query = {};
+    // Set the _id property of the query object to the id in req.params
+    query._id = req.params.id;
+
+    // Run the headlinesController delete method and pass in our query object containing
+    // the id of the headline we want to delete
+    headlinesController.delete(query, function(err, data) {
+      // Send the result back as JSON to be handled client side
+      res.json(data);
+    });
+  });
+
 
 };

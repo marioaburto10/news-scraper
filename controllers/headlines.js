@@ -40,7 +40,7 @@ module.exports = {
 	    // and sort starting from most recent (sorted by id num)
 	    Headline.find(query)
 			.sort({
-				_id: 1
+				_id: -1
 			})
 			// Execute this query
 			.exec(function(err, doc) {
@@ -55,6 +55,10 @@ module.exports = {
 		Headline.update({ _id: query._id }, {
 		  $set: query
 		}, {}, cb);
-	}
+	},
+
+  	delete: function(query, cb) {
+   		Headline.remove(query, cb);
+  	},
 
 };

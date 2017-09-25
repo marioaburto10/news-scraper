@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	// Setting a reference to the article-container div where all the dynamic content will go
 	var articleContainer = $(".article-container");
+  	// Event listener for dynamically created article delete buttons
+  	$(document).on("click", ".btn.delete", handleArticleDelete);
 
 	// initPage kicks everything off when the page is loaded
 	initPage();
@@ -69,19 +71,18 @@ $(document).ready(function() {
 	}
 
 	function renderEmpty() {
-	    // This function renders some HTML to the page explaining that there are no articles to view
+	    // This function renders some HTML to the page explaining we don't have any articles to view
 	    // Using a joined array of HTML string data because it's easier to read/change than a concatenated string
 	    var emptyAlert =
 	      $(["<div class='alert alert-warning text-center'>",
-	        "<h4>Uh Oh. Looks like we don't have any new articles.</h4>",
+	        "<h4>Uh Oh. Looks like we don't have any saved articles.</h4>",
 	        "</div>",
 	        "<div class='panel panel-default'>",
 	        "<div class='panel-heading text-center'>",
-	        "<h3>What Would You Like To Do?</h3>",
+	        "<h3>Would You Like to Browse Available Articles?</h3>",
 	        "</div>",
 	        "<div class='panel-body text-center'>",
-	        "<h4><a class='scrape-new'>Try Scraping New Articles</a></h4>",
-	        "<h4><a href='/saved'>Go to Saved Articles</a></h4>",
+	        "<h4><a href='/'>Browse Articles</a></h4>",
 	        "</div>",
 	        "</div>"
 	      ].join(""));
@@ -89,5 +90,22 @@ $(document).ready(function() {
 	    articleContainer.append(emptyAlert);
 	}
 
+
+	function handleArticleDelete() {
+		// This function handles deleting articles/headlines
+		// We grab the id of the article to delete from the panel element the delete button sits inside
+		var articleToDelete = $(this).parents(".panel").data();
+		// Using a delete method here just to be semantic since we are deleting an article/headline
+		console.log(articleToDelete);
+		$.ajax({
+		  method: "DELETE",
+		  url: "/api/headlines/" + articleToDelete._id
+		}).then(function(data) {
+		  // If this works out, run initPage again which will rerender our list of saved articles
+		  if (data.ok) {
+		    initPage();
+		  }
+		});
+	}
 
 });
