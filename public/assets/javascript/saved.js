@@ -1,8 +1,9 @@
 $(document).ready(function() {
 	// Setting a reference to the article-container div where all the dynamic content will go
 	var articleContainer = $(".article-container");
-  	// Event listener for dynamically created article delete buttons
+  	// Event listener for dynamically created buttons
   	$(document).on("click", ".btn.delete", handleArticleDelete);
+  	$(document).on("click", ".btn.notes", handleArticleNotes);
 
 	// initPage kicks everything off when the page is loaded
 	initPage();
@@ -90,6 +91,41 @@ $(document).ready(function() {
 	    articleContainer.append(emptyAlert);
 	}
 
+	function renderNotesList(data) {
+	    // This function handles rendering note list items to notes modal
+	    // Setting up an array of notes to render after finished
+	    // Also setting up a currentNote variable to temporarily store each note
+	    var notesToRender = [];
+	    var currentNote;
+	    if (!data.notes.length) {
+	      // If there are no notes, just display a message explaing this
+	      currentNote = [
+	        "<li class='list-group-item'>",
+	        "No notes for this article yet.",
+	        "</li>"
+	      ].join("");
+	      notesToRender.push(currentNote);
+	    }
+	    else {
+	      // If there are notes, go through each one
+	      for (var i = 0; i < data.notes.length; i++) {
+	        // Constructs an li element to contain noteText and a delete button
+	        currentNote = $([
+	          "<li class='list-group-item note'>",
+	          data.notes[i].noteText,
+	          "<button class='btn btn-danger note-delete'>x</button>",
+	          "</li>"
+	        ].join(""));
+	        // Store the note id on the delete button for easy access when trying to delete
+	        currentNote.children("button").data("_id", data.notes[i]._id);
+	        // Adding currentNote to the notesToRender array
+	        notesToRender.push(currentNote);
+	      }
+	    }
+	    // Now append the notesToRender to the note-container inside the note modal
+	    $(".note-container").append(notesToRender);
+	}
+
 
 	function handleArticleDelete() {
 		// This function handles deleting articles/headlines
@@ -107,5 +143,44 @@ $(document).ready(function() {
 		  }
 		});
 	}
+
+	function handleArticleNotes() {
+	    // This function handles opending the notes modal and displaying notes
+	    // Grab the id of the article to get notes for from the panel element the notes button sits inside
+	    var currentArticle = $(this).parents(".panel").data();
+	    console.log(currentArticle);
+	    // Grab any notes with this headline/article id
+	    $.get("/api/notes/" + currentArticle._id).then(function(data) {
+	      // Constructing  initial HTML to add to the notes modal
+	      var modalText = [
+	        "<div class='container-fluid text-center'>",
+	        "<h4>Notes For Article: ",
+	        currentArticle._id,
+	        "</h4>",
+	        "<hr />",
+	        "<ul class='list-group note-container'>",
+	        "</ul>",
+	        "<textarea placeholder='New Note' rows='4' cols='60'></textarea>",
+	        "<button class='btn btn-success save'>Save Note</button>",
+	        "</div>"
+	      ].join("");
+	      // Adding the formatted HTML to the note modal
+	      bootbox.dialog({
+	        message: modalText,
+	        closeButton: true
+	      });
+	      var noteData = {
+	        _id: currentArticle._id,
+	        notes: data || []
+	      };
+	      // Adding some information about the article and article notes to the save button for easy access
+	      // When trying to add a new note
+	      $(".btn.save").data("article", noteData);
+	      // renderNotesList will populate the actual note HTML inside of the modal just created/opened
+	      renderNotesList(noteData);
+	    });
+  	}
+
+
 
 });
