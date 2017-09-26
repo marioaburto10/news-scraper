@@ -4,6 +4,7 @@ $(document).ready(function() {
   	// Event listener for dynamically created buttons
   	$(document).on("click", ".btn.delete", handleArticleDelete);
   	$(document).on("click", ".btn.notes", handleArticleNotes);
+  	$(document).on("click", ".btn.save", handleNoteSave);
 
 	// initPage kicks everything off when the page is loaded
 	initPage();
@@ -148,7 +149,7 @@ $(document).ready(function() {
 	    // This function handles opending the notes modal and displaying notes
 	    // Grab the id of the article to get notes for from the panel element the notes button sits inside
 	    var currentArticle = $(this).parents(".panel").data();
-	    console.log(currentArticle);
+	    console.log(currentArticle._id);
 	    // Grab any notes with this headline/article id
 	    $.get("/api/notes/" + currentArticle._id).then(function(data) {
 	      // Constructing  initial HTML to add to the notes modal
@@ -178,8 +179,30 @@ $(document).ready(function() {
 	      $(".btn.save").data("article", noteData);
 	      // renderNotesList will populate the actual note HTML inside of the modal just created/opened
 	      renderNotesList(noteData);
+	      console.log(noteData)
 	    });
   	}
+
+	function handleNoteSave() {
+		// This function handles what happens when a user tries to save a new note for an article
+		// Setting a variable to hold some formatted data about our note,
+		// grabbing the note typed into the input box
+		var noteData;
+		var newNote = $(".bootbox-body textarea").val().trim();
+		// If we actually have data typed into the note input field, format it
+		// and post it to the "/api/notes" route and send the formatted noteData as well
+		console.log(newNote);
+		if (newNote) {
+		  noteData = {
+		    _id: $(this).data("article")._id,
+		    noteText: newNote
+		  };
+		  $.post("/api/notes", noteData).then(function() {
+		    // When complete, close the modal
+		    bootbox.hideAll();
+		  });
+		}
+	}
 
 
 

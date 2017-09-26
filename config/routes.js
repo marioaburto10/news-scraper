@@ -3,8 +3,10 @@
 // Bring in the Scrape function from scripts directory
 var scrape = require("../scripts/scrape");
 
-// Bring in headlines controller
+// Bring in headlines controller and notes controller
 var headlinesController = require("../controllers/headlines");
+var notesController = require("../controllers/notes");
+
 
 module.exports = function(router) {
   // This route renders the homepage
@@ -84,6 +86,40 @@ module.exports = function(router) {
       res.json(data);
     });
   });
+
+  // -----------------------------------------------
+  // Note routes
+
+  // This route handles getting notes for a particular headline id
+  router.get("/api/notes/:headline_id?", function(req, res) {
+    // If we are supplied a headline id in req.params, then we will add the id to our query object
+    // Otherwise query will remain an empty object and thus return every note
+    console.log("get route is hit");
+    var query = {};
+    if (req.params.headline_id) {
+      query._id = req.params.headline_id;
+      console.log(query._id);
+    }
+
+    // Get all notes that match query using the notesController get method
+    notesController.get(query, function(err, data) {
+      if (err) {console.log(err);}
+      // Send the note data back to the user as JSON
+      console.log(data);
+      res.json(data);
+    });
+  });
+
+  // This route handles saving a new note
+  router.post("/api/notes", function(req, res) {
+  	console.log(req.body);
+    notesController.save(req.body, function(data) {
+      // Send the note to the browser as a json
+      res.json(data);
+    });
+  });
+
+
 
 
 };

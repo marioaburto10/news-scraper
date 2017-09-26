@@ -114,3 +114,22 @@ body {
 .navbar-nav > li > a.scrape-new:active {
   background: #e51c23;
 }
+
+textarea {
+  padding: 10px;
+  resize: none;
+}
+
+.bootbox-body .btn {
+  float: right;
+  margin: 5px;
+}
+
+.note.list-group-item {
+  padding: 30px;
+}
+
+.note.list-group-item .btn {
+  position: relative;
+  bottom: 10px;
+}

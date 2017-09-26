@@ -7,7 +7,7 @@ module.exports = {
 	get: function(data, cb) {
    		// Find all notes with the headline id from the article we passed
 	    Note.find({
-      		headlineId: data._id
+      		_headlineId: data._id
    		}, cb);
 	},
 
@@ -18,7 +18,6 @@ module.exports = {
 		// Make a newNote with the note model, saving the apropos info
 		var newNote = {
 			_headlineId: data._id,
-			date: makeDate(),
 			noteText: data.noteText
 		};
 
@@ -36,6 +35,6 @@ module.exports = {
 				cb(doc);
 			}
 		});
-	},
+	}
 
 };
