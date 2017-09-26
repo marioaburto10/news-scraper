@@ -35,6 +35,14 @@ module.exports = {
 				cb(doc);
 			}
 		});
+	},
+
+	delete: function(data, cb) {
+		// Remove a Note using mongoose and note Model,
+		// searching by the article's id
+		Note.remove({
+		  _id: data._id
+		}, cb);
 	}
 
 };

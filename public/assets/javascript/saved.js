@@ -5,6 +5,8 @@ $(document).ready(function() {
   	$(document).on("click", ".btn.delete", handleArticleDelete);
   	$(document).on("click", ".btn.notes", handleArticleNotes);
   	$(document).on("click", ".btn.save", handleNoteSave);
+	$(document).on("click", ".btn.note-delete", handleNoteDelete);
+
 
 	// initPage kicks everything off when the page is loaded
 	initPage();
@@ -155,7 +157,7 @@ $(document).ready(function() {
 	      // Constructing  initial HTML to add to the notes modal
 	      var modalText = [
 	        "<div class='container-fluid text-center'>",
-	        "<h4>Notes For Article: ",
+	        "<h4>Notes For Article with ID: ",
 	        currentArticle._id,
 	        "</h4>",
 	        "<hr />",
@@ -205,5 +207,19 @@ $(document).ready(function() {
 	}
 
 
+	function handleNoteDelete() {
+	    // This function handles the deletion of notes
+	    // First grab the id of the note to be deleted
+	    // This data was stored on the delete button when it was created
+	    var noteToDelete = $(this).data("_id");
+	    // Perform a DELETE request to "/api/notes/" with the id of the note being deleted as a parameter
+	    $.ajax({
+	      url: "/api/notes/" + noteToDelete,
+	      method: "DELETE"
+	    }).then(function() {
+	      // When done, hide the modal
+	      bootbox.hideAll();
+	    });
+	}
 
 });

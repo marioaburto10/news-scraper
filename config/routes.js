@@ -98,27 +98,40 @@ module.exports = function(router) {
     var query = {};
     if (req.params.headline_id) {
       query._id = req.params.headline_id;
-      console.log(query._id);
+      // console.log(query._id);
     }
 
     // Get all notes that match query using the notesController get method
     notesController.get(query, function(err, data) {
       if (err) {console.log(err);}
       // Send the note data back to the user as JSON
-      console.log(data);
+      // console.log(data);
       res.json(data);
     });
   });
 
   // This route handles saving a new note
   router.post("/api/notes", function(req, res) {
-  	console.log(req.body);
+  	// console.log(req.body);
     notesController.save(req.body, function(data) {
       // Send the note to the browser as a json
       res.json(data);
     });
   });
 
+  // This route handles deleting a note of a particular note id
+  router.delete("/api/notes/:id", function(req, res) {
+    var query = {};
+    query._id = req.params.id;
+
+    // Use the check function from the headlines controller,
+    // this checks all of our articles, sorted by id number
+    notesController.delete(query, function(err, data) {
+      // Send the article data to a json
+      res.json(data);
+      // console.log(data);
+    });
+  });
 
 
 
