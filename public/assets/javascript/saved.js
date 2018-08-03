@@ -213,6 +213,7 @@ $(document).ready(function() {
 	    // This data was stored on the delete button when it was created
 	    var noteToDelete = $(this).data("_id");
 	    // Perform a DELETE request to "/api/notes/" with the id of the note being deleted as a parameter
+	    
 	    $.ajax({
 	      url: "/api/notes/" + noteToDelete,
 	      method: "DELETE"

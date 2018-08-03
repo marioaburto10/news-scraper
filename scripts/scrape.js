@@ -27,8 +27,8 @@ var scrape = function(cb) {
 		    // grab the link of each article
 		    var lnk = $(this).children(".post-info").children("h3").children("a").attr("href");
 		    // grab the image link of each article
-		    var img = $(this).children(".picture").children("a").children("img").attr("src");
-		    // console.log("this is an article" , img);
+		    var img = $(this).children(".picture").children("a").children("img").attr("data-cfsrc");
+		    // console.log(img);
 			  // So long as headline and sum aren't empty or undefined, do the following
 			  if (head && sum && lnk && img) {
 
@@ -44,6 +44,8 @@ var scrape = function(cb) {
 			      link: lnk,
 			      image: img
 			    };
+
+			    // console.log(dataToAdd);
 
 			    articles.push(dataToAdd);
 			  }
