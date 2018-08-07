@@ -45,7 +45,7 @@ var scrape = function(cb) {
 			      image: img
 			    };
 
-			    // console.log(dataToAdd);
+			    console.log(dataToAdd);
 
 			    articles.push(dataToAdd);
 			  }
